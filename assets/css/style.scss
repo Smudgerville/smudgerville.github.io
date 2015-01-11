@@ -1,8 +1,7 @@
 ---
 ---
-// import bootstrap
-@import "bootstrap";
 
+// basic bootstrap template css
 body {
   padding-top: 50px;
 }
@@ -11,6 +10,28 @@ body {
   text-align: center;
 }
 
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 80px;
+  background-color: #f5f5f5;
+}
+
+
+// import bootstrap
+@import "bootstrap";
 
 /**
 * Icons (from jekyll original template)
