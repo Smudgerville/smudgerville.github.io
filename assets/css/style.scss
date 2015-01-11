@@ -10,3 +10,15 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+
+
+/**
+* Icons (from jekyll original template)
+*/
+.icon > svg {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle; }
+  .icon > svg path {
+    fill: #828282; }
