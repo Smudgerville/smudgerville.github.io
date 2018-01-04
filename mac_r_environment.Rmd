@@ -1,0 +1,40 @@
+---
+title: "Time Series R Environment Details"
+date: ""
+output:
+  html_notebook:
+    fig_caption: yes
+    highlight: textmate
+    theme: cosmo
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+  html_document:
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+---
+
+## Session Info
+
+```{r}
+devtools::session_info()
+```
+
+## Installed Packages
+
+```{r}
+pks <- installed.packages()
+as.data.frame(pks[,c("Package", "Version")], row.names = F)
+```
+
+## Course Packages
+
+```{r}
+c("forecast", "lubridate", "xts", "zoo", "ggplot2", "fpp2", "seasonal", "devtools", "dygraphs", "quantmod")
+
+# for formatting presentations
+c("xaringan", "DT", "leaflet")
+
+```
+

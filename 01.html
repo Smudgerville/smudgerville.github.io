@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introductory Time Series</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Richard M. Smith" />
+    <link href="libs/remark-css/example.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introductory Time Series
+### Richard M. Smith
+### 2018/01/04
+
+---
+
+
+
+
+
+---
+
+# Class Goals
+
+- Introduction to Time Series Analysis
+  
+  - Time Series Principles
+  
+  - Tools and techniques for working with Time Series in R
+  
+  - Methods of delivery and communication
+  
+- Balance of theory and practical applications
+
+  - Including discussion of data science / time series forecasting within organizations
+
+---
+
+# Tools
+
+- [R](https://cran.r-project.org/) + [R Studio](https://www.rstudio.com/)
+
+- [git](https://git-scm.com/) + [github](https://github.com/)
+
+--
+
+# Texts
+
+- [Introductory Time Series with R](https://goo.gl/iDSDxh)
+  - 2009 Edition; ISBN 978-0-387-88697-8
+
+- [Forecasting Principles &amp; Practice](http://otexts.org/fpp2/)
+
+- [Time Series Analysis and Its Applications](http://evalenzu.mat.utfsm.cl/Docencia/2016/Segundo%20semestre/Series%20de%20Tiempo%20II/Apunte%201.pdf)
+  - Third Edition; ISBN 978-1-4419-7864-6
+
+---
+
+# Expectations
+
+- Bring your computer to class
+
+- Pay attention &amp; participate!
+
+- Read assigned chapters
+
+- Provide feedback
+
+
+---
+
+# About Me
+
+- Manager, Sales Analysis &amp; Forecasting LG&amp;E-KU
+
+- Prior roles in Accounting, Finance, Regulatory functions
+
+- BS Business Admin, BS Finance &amp; Accounting, MBA, CPA, CFA
+  - Almost no exposure to modern analytics tools from these
+  
+- Started using R through JHU Data Science Specialization on Coursera
+
+---
+
+# Class Philisophy
+
+.pull-left[
+![sharing_work](01_files/figure-html/drob_sharing.PNG)
+Image credit: [David Robinson](https://twitter.com/drob) / [Amelia McNamara](https://twitter.com/AmeliaMN)
+]
+
+.pull-right[
+[10 rules for students &amp; teachers](https://www.brainpickings.org/2012/08/10/10-rules-for-students-and-teachers-john-cage-corita-kent/) 
+
+4. Consider everything an experiment.
+6. Nothing is a mistake. There’s no win and no fail, there’s only make.
+7. The only rule is work. If you work it will lead to something. It’s the people who do all of the work all of the time who eventually catch on to things.
+8. Don’t try to create and analyze at the same time. They’re different processes.
+]
+
+
+---
+# Why care about time series?
+
+![last-week](01_files/figure-html/time_series_db.PNG)
+
+---
+
+# Forecasting, Planning and Goals
+
+**Forecasting** is about predicting the future as accurately as possible, given all of the information available, including historical data and knowledge of any future events that might impact the forecasts.
+
+**Goals** are what you would like to have happen. Goals should be linked to forecasts and plans, but this does not always occur. Too often, goals are set without any plan for how to achieve them, and no forecasts for whether they are realistic.
+
+**Planning** is a response to forecasts and goals. Planning involves determining the appropriate actions that are required to make your forecasts match your goals.
+
+
+---
+
+# Basic forecasting tasks
+
+1.  Problem Definition
+
+2.  Gathering Information
+
+3.  Preliminary (exploratory) analysis
+
+4.  Choosing and fitting models
+
+5.  Using and evaluating a forecasting model
+
+
+---
+
+# Time Series Basics
+
+- Correlation introduced by the sampling of adjacent points in time can severely restrict the applicability of the many conventional statistical methods traditionally dependent on the assumption that these adjacent observations are independent and identically distributed.
+
+- Primary objective of time series analysis is to develop mathematical models that provide plausible descriptions for sample data
+
+--
+## Examples
+
+- Economics:  daily stock market figures and monthly unemployment statistics
+- Social Science:  birth rates, school enrollments
+- Medical:  influenza cases, blood pressure, brain-wave reactions to stimuli
+- Environmental Science:  global temperatures, pollution impact on mortality
+- Other:  speech recognition, seismic recordings
+
+---
+# Time Domain &amp; Frequency Domain
+
+- Time:  correlation between adjacent points in time is best explained in terms of a dependence of the current value on past values
+  - ARIMA models
+  - State-space models - sums of series each with specified time series structure
+
+- Frequency:  primary characteristics relate to periodic or systematic variations found in most data
+  - Often caused by biological, physical, or environmental phenomona
+  - Wind, sea surface temperature, seasonal unemployment
+
+---
+# Notation
+
+- Assume a time series can be defined as a collection of random variables indexed according to the order they are obtained in time.  `\(x_1, x_2, x_3, ...\)`
+
+- A collection of random variables, `\(\{x_t\}\)`, indexed by `\(t\)` is referred to as a stochastic process.
+
+
+---
+
+# Getting Book data from github
+
+[Github Repo](https://github.com/Smudgerville/IntroTimeSeriesWithR)
+
+
+```r
+base_url &lt;- "https://raw.githubusercontent.com/Smudgerville/IntroTimeSeriesWithR/master/"
+
+in_data &lt;- read.table(paste0(base_url, "USunemp.dat"), header = T)
+knitr::kable(head(in_data), format = "html")
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; USun &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5.3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# Exercises
+
+1.  Get the current system time and store as a variable.  Is this a POSIXct or POSIXlt object?
+2.  Retrieve the year from this variable
+3.  Create a monthly vector of date objects for 2018
+4.  Create an hourly vector of POSIXct values for today
+5.  Create a 4 year, quarterly time series dataset of random normal variables beginning in January 1990
+6.  Load and plot the `sunspots` dataset with a horizontal red line showing the mean of the whole dataset
+7.  Do a seasonal plot of the Australian Wine data (requires `forecast` package)
+8.  Using Base R graphics, plot a logistic distribution of monthly values over a 3-year period beginning January 2018.  Add a blue line showing the trailing 3-period moving average and a red line showing the 2-sided 5 period moving average.
+
+---
+
+# Homework
+
+- Install R v3.4 or greater
+
+- Install R Studio version 1.0 or greater
+
+- Download and install git on your machine
+
+- Sign up for a github account
+
+- Download course R packages
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
+(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
