@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introductory Time Series</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Richard M. Smith" />
+    <link href="libs/remark-css/example.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introductory Time Series
+## Session 2
+### Richard M. Smith
+### 2018/01/18
+
+---
+
+
+
+
+---
+# Class Overview
+
+- Syllabus Updates &amp; Project Overview
+
+- Review of class 1 examples
+
+- R Notebooks
+
+- Smoothing
+
+- Decomposition
+
+- Differencing
+
+- Correlation
+
+---
+# Syllabus updates
+
+- Timing Changes:  Class 1/23 (homework due 2/1)
+
+- Session 6:  Tidy Time Series &amp; R Packages
+
+- Session 7:  Shiny
+
+---
+# Project Overview
+
+- Groups of 2 or 3
+
+- Brief (2-3 pages) paper outlining problem, dataset, techniques, and conclusion
+
+- 10 minute presentation
+
+- 5 minute Q&amp;A
+
+- Application of class concepts 
+
+- Utilizing one or more presentation methods
+  - R Markdown, R Pres / Powerpoint (with code), Shiny, R Package, Static Site
+
+- Choose any dataset / forecasting problem of interest to you
+
+---
+# Rubric
+
+| Description | Points | 
+| ----------- | ------ | 
+| Paper | 30 |
+| Presentation &amp; Materials | 20 |
+| Q &amp; A | 10 |
+| Application &amp; Understanding of Concepts | 30 |
+| Discussant | 10 |
+| **Total** | **100** |
+
+---
+# Project Details
+
+- Focus on the analytical process, not the end result
+
+- Refer to the basic forecasting tasks from first class!
+
+- Explain WHY
+
+- Groups by 1/23
+
+- Discussant assignments 2/1
+
+- Materials to primary discussant by midnight 2/18
+
+---
+# Setup
+
+- [Course Packages](https://gist.github.com/Smudgerville/8761e2f6814945e522a643c4bf0ace86)
+
+
+---
+# Review of Class 1 Examples
+
+1.  Get the current system time and store as a variable.  Is this a POSIXct or POSIXlt object?
+2.  Retrieve the year from this variable
+3.  Create a monthly vector of date objects for 2018
+4.  Create an hourly vector of POSIXct values for today
+5.  Create a 4 year, quarterly time series dataset of random normal variables beginning in January 1990
+6.  Load and plot the `sunspots` dataset with a horizontal red line showing the mean of the whole dataset
+7.  Do a seasonal plot of the Australian Wine data (requires `forecast` package)
+8.  Using Base R graphics, plot a logistic distribution of monthly values over a 3-year period beginning January 2018.  Add a blue line showing the trailing 3-period moving average and a red line showing the 2-sided 5 period moving average.
+
+---
+# R Notebooks
+
+- Report Generation with R + Markdown
+
+- Excellent means of sharing work &amp; collaborating
+
+- Provides a method for clear presentation AND quickly getting to underlying code
+
+- R Markdown vs. R Notebook:
+  - R Notebook for sharing analytical practices
+  - Perfect for building out knowledge &amp; consistency at an organization 
+  - R Markdown for presenting results rather than how you got there
+
+---
+# YAML
+
+- [YAML:  YAML Ain't Markup Language](http://yaml.org/)
+- Human friendly data serialization standard for all programming languages.
+
+
+
+```r
+---
+title: "R Notebook"
+output: html_notebook
+---
+```
+
+---
+# R Code Chunks &amp; Options
+
+- `echo`
+
+- `message`
+
+- `warning`
+
+- `results`
+
+- `eval`
+
+
+```r
+seq(from = 1, to = 10, by = 0.1)
+```
+
+---
+# knitr Package
+
+- [Report generation with R](https://yihui.name/knitr/)
+- [Github](https://github.com/yihui/knitr)
+
+Note:  Requires a TeX installation for pdf.
+
+---
+# Time Series Functions
+
+- `aggregate` - subset and compute summary statistics
+  
+  - `nfrequency`
+  
+  - `FUN`
+
+- `cycle` - positions in the cycle of each observation
+
+- `window` - subset of the object between 2 times
+
+
+---
+# Smoothing
+
+Smoothing methods can be applied to historical time series with the objective of identifying an underlying signal or trend.
+
+Two widely used methods:
+
+- Moving Average
+- Loess
+  - locally weighted
+  - `stl` function in R
+  - [Excellent example and code](http://varianceexplained.org/files/loess.html)
+
+
+---
+# Smoothing - Moving Average
+
+- First step in classical decomposition is to use a moving average method to estimate the trend-cycle
+
+- Observations that are nearby in time are likely to be close in value, average eliminates some randomness
+
+- Moving averages usually done with odd-number if 2-sided so they are symmetrical
+
+
+---
+# Moving Averages of Moving Averages
+
+Notation:  
+- 4-MA moving average of 4 periods
+- 2 x 4-MA two-period moving average of the 4-MA
+
+- This creates a centred series with two even-numbered periods
+
+- Most common usage is estimating the trend-cycle from seasonal data:
+
+`$$\hat{T}_t = {1 \over 8}y_{t-2} + {1 \over 4}y_{t-1} + {1 \over 4}y_t + {1 \over 4}y_{t+1} + {1 \over 8}y_{t+2}$$`
+
+---
+# Time Series Decomposition
+
+Additive vs. Multiplicative - does variance increase with time
+
+- Additive:  `\(y_t = S_t + T_t + R_t\)`
+
+- Multiplicative:  `\(y_t = S_t \times T_t \times R_t\)`
+
+Alternative to using a multiplicative model is to transform the data until variation appears stable over time.
+
+---
+# Other widely used decomposition methods
+
+- X11
+  - US Census Bureau
+  - Trend-cycle available for all observations
+  - Seasonal component can vary slowly over time
+
+- SEATS
+  - Seasonal Extraction in ARIMA Time Series
+  - Only works with quarterly and monthly data
+
+- STL
+  - Seasonal and Trend Decomposition using Loess
+  - Handles many types of seasonality well
+  - Seasonal change and smoothness can be controlled by user
+  - Only provides facilities for additive decomposition
+
+---
+# Forecasting Decomposition
+
+- Decomposition can be useful in forecasting as well as studying historical data
+
+- Often assumed that the seasonal component is unchanging or changing very slowly
+  - Seasonal naive is appropriate
+
+- Seasonally adjusted component can be forecasted with any non-seasonal forecasting method (Random walk with drift, Holt-Winters, Non-seasonal ARIMA)
+
+---
+# Expectation
+
+Expected value, commonly abbreviated to `\(expectation, E\)`, of a value is its *mean* value in a population.  So `\(E(x)\)` is the mean of `\(x\)`, denoted `\(\mu\)`
+
+---
+# Covariance
+
+Covariance is a measure of *linear association*
+
+`$$\gamma(x, y) = E [(x - \mu_x)(y - \mu_y)]$$`
+Sample covariance
+
+`$$Cov(x, y) = \sum(x_i - \bar{x})(y_i - \bar{y})/(n - 1)$$`
+
+
+---
+# Correlation
+
+Dimensionless measure of the linear association between a pair of vairables.
+
+Correlation takes a value between -1 and +1, with a value of 0 indicating no *linear* association.
+
+Population correlation, `\(\rho\)`, between a pair of variables `\((x, y)\)` is:
+
+`$$\rho(x, y) = {{E[(x - \mu_x)(y - \mu_y)]} \over {\sigma_x \sigma_y}} = {\gamma(x, y) \over {\sigma_x \sigma_y}}$$`
+
+The sample correlation, `\(Cor\)`, is an estimate of `\(\rho\)` and is calculated by:
+
+$$Cor(x, y) = {{Cov(x, y)} \over {sd(x)sd(y)}} $$
+
+---
+# Correlation
+
+`cor`
+
+
+```r
+base_url &lt;- "https://raw.githubusercontent.com/Smudgerville/IntroTimeSeriesWithR/master/"
+cbe &lt;- read.table(paste0(base_url, "cbe.dat"), header = T)
+with(cbe, cor(choc, elec))
+```
+
+```
+## [1] 0.8130606
+```
+
+We've all heard it before but important to emphasize - correlation does not imply causality
+
+---
+# The ensemble and stationarity
+
+Mean function of a time series model:  `\(u(t) = E(x_t)\)`
+
+- Expectation is an average across the *ensemble* of all possible series produced by the model. (simulation)
+
+- If the mean function is constant, we say that the time series model is *stationary* in the mean.
+
+- Said another way, a stationary time series is one whose properties do not depend on the time at which the series is observed.
+
+- In general, a stationary time series will have no predictable patterns in the long-term. Time plots will show the series to be roughly horizontal (although some cyclic behaviour is possible), with constant variance.
+
+---
+# Variance function
+
+Variance function of a time series model that is stationary in the mean is
+
+`$$\sigma^2(t) = E[(x_t - \mu)^2]$$`
+
+- This can in theory take a different value at every point in time.  
+
+- However, we can't estimate variance from a single point.  
+
+- Assumption is that model is stationary in the variance.
+
+- In time series, sequential observations may be correlated.  With positive correlation, our model will tend to underestimate in a short series because successive observations are influenced by prior observations.
+
+---
+# Differencing
+
+- Differencing is one way to make a time series stationary.
+
+- Transformations such as logarithms can help to stabilize the variance of a time series.  
+
+- Differencing can help stabilize the mean of a time series by removing changes in the level.
+
+
+---
+# Autocorrelation
+
+With time series second-order properties play an important role
+
+Serial correlation or Autocorrelation:  correlation of a variable with itself at different times.  
+
+*Second-order stationary*: autocorrelation depends only on the number of steps between observations.
+
+If a series is *second-order stationary*, then we can define an `\(autocovariance function (acvf), \gamma_k\)`, as a function of the lag `\(k\)`:
+
+`$$\gamma_k = E[(x_t - \mu)(x_{t+k} - \mu)]$$`
+Simiar to above relationship to covariance but replacing `\(y\)` with `\(x_{t+k}\)`, the lag `\(k\)` autocorrelation function `\((acf), \rho_k\)` is:
+
+`$$\rho_k = {{\gamma_k} \over {\sigma^2}}$$`
+
+Note:  general discussion will just refer to second-order as stationary.  
+
+Similar to correlation, formula bounds possible values between -1 and 1.
+
+---
+# The correlogram
+
+`acf` produces a plot by default.  Underneath it is a list.
+
+Plot type is called correlogram.  Key features:
+- *x*-axis give the lag `\((k)\)`.  Unit of lag is sampling interval
+- Lag 0 is always 1 and is shown to help comparisons
+- If `\(\rho_k = 0\)`, the sampling distribution of `\(r_k\)` is approximately normal, with a mean of `\(-1/n\)` and a variance of `\(1/n\)`.  Dotted lines are drawn at:
+
+`$$-{1 \over n} \pm {2 \over \surd{n}}$$`
+
+---
+# Correlogram 
+
+- ACF plot is useful for identifying non-stationary time series
+
+- For a stationary time series, the ACF will drop to zero relatively quickly
+
+- The ACF of non-stationary data decreases slowly.
+
+---
+## Second-order differencing
+
+Occasionally the differenced data will not appear to be stationary and it may be necessary to differentiate a second time to obtain a stationary series.
+
+--
+## Seasonal differencing
+
+A seasonal difference is the difference between an observation and the previous observation from the same season.
+
+`$$y^*_t = y - y_{t-1}$$`
+
+where `\(m\)` = the number of seasons.  Also called "lag-$m$ differences".  If seasonally differenced data appear to be white noise, then an appropriate model is:
+
+`$$y_t = y_{t-m} + e_t$$`
+
+---
+## Tests for stationarity
+
+- *unit root test*
+
+- *Augmented Dickey-Fuller (ADF) test*
+
+The null-hypotheses for an ADF is that the data are non-stationary.  Thus, small p-values suggest stationarity. 
+
+- `adf.test` in *tseries* package
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
+(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

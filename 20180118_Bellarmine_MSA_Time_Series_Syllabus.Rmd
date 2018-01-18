@@ -1,0 +1,138 @@
+---
+title: "Time Series Forecasting"
+author: "Richard M. Smith, CPA, CFA"
+date: "November 27, 2017"
+output:
+  html_document:
+    fig_caption: yes
+    highlight: textmate
+    theme: cosmo
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+## Contact Information
+
+- <i class="fa fa-envelope"></i>  richsmith15@gmail.com
+- <i class="fa fa-envelope"></i>  rsmith20@bellarmine.edu
+- <i class="fa fa-mobile fa-2x" aria-hidden="true"></i> (812) 629-0889
+
+
+## Schedule
+
+| Date | Time | Notes |
+| ---- | ---- | ----- |
+| 2017-01-04 | 18:00 - 20:00 | Setup Hwk |
+| 2017-01-18 | 18:00 - 20:00 | In-class quiz |
+| 2017-01-23 | 18:00 - 20:00 | Homework Questions |
+| 2017-01-25 | 18:00 - 20:00 | In-class quiz |
+| 2017-02-01 | 18:00 - 20:00 | Homework Questions |
+| 2017-02-08 | 18:00 - 20:00 | In-class quiz |
+| 2017-02-15 | 18:00 - 20:00 | Homework Questions |
+| 2017-02-22 | 18:00 - 20:00 | Final Presentations |
+
+
+## Course Description
+
+This course provides an overview of basic time series techniques and will be conducted using the R programming language.   In addition, the course will provide an overview of different methods of preparing and presenting the results of time series analysis considering organizational limitations.
+
+### Tools
+
+- R + R Studio
+- Git + Github
+
+## Required Texts
+
+- [Introductory Time Series with R](https://goo.gl/iDSDxh) *(ITSwR)*
+  - 2009 Edition; ISBN 978-0-387-88697-8
+  - Note on github repo for class data:
+    - https://github.com/Smudgerville/IntroTimeSeriesWithR
+
+## Additional Free Texts
+
+- [Forecasting Principles & Practice](http://otexts.org/fpp2/) *(FPP)*
+
+- [Time Series Analysis and Its Applications](http://evalenzu.mat.utfsm.cl/Docencia/2016/Segundo%20semestre/Series%20de%20Tiempo%20II/Apunte%201.pdf) *(TSAA)*
+  - Third Edition; ISBN 978-1-4419-7864-6
+
+## Course Requirements
+
+- In-Class Quizzes x3
+- Homework Assignments x3
+- Final Project & Presentation
+
+## Assignments and Grading
+
+| Description | Points | Notes |
+| ----------- | ------ | ----- |
+| In-class Quizzes | 60 | |
+| Homework | 40 | 20 each and drop the lowest |
+| Project & Presentation | 100 | |
+| Participation Bonus | 20 | |
+
+## Course Outline
+
+Dates are subject to change.  
+
+### Session 1
+
+- Introductions
+- Syllabus & Admin
+- Chapter 1:  Time Series Data
+- [FPP Chapter 1:  Forecasting Basics](http://otexts.org/fpp2/intro.html)
+
+Homework:  R, R Studio, git, Github setup
+
+### Session 2
+
+- Chapter 2:  Correlation
+- Decomposition & Differencing
+- R Notebook
+
+
+### Session 3
+
+- Chapter 3:  Forecasting Strategies
+- [Data and methods - fpp](http://otexts.org/fpp2/data-methods.html)
+- [FPP Chapter 3:  The forecaster's toolbox](http://otexts.org/fpp2/toolbox.html)
+- Git Basics / Static Sites
+
+
+### Session 4
+
+- Chapter 4:  Basic Stochastic Models
+- Plotting & Dygraphs
+
+### Session 5
+
+- Chapter 5:  Regression
+- Presentations with OfficeR / R Pres
+
+### Session 6
+
+- Chapter 6:  Stationary Models
+- Tidy Time Series (M. Weis) / R Package Development
+  
+### Session 7
+
+- Chapter 7:  Non-stationary Models
+- Introduction to Shiny
+
+### Session 8
+
+Presentations
+
+
+## If Time Permits
+
+- Chapter 8:  Long-Memory Processes
+- Chapter 11:  Multivariate Models
+- Advanced Applications:  Deep learning & Time Series with TensorFlow / Keras
